@@ -20,22 +20,27 @@ thread = None
 def background_thread():
     """Example of how to send server generated events to clients."""
     count = 0
-    airquality = 0
-    temperature = 0
-    fahrenheit = 0
+    power = 0.0
+    IVcurrent1 = 0.0
+    IVcurrent2 = 0.0
+    IVoltage1 = 0.0
+    IVoltage2 = 0.0
+    IVscale = 50.0
     
     while True:
-        time.sleep(5)
-        print("Hello World")
+        time.sleep(2)
+        #print("Hello World")
         count += 1
         socketio.emit('my response',
                       {'data': 'Server generated event', 'count': count},
                       namespace='/test')
-        airquality = sensor.AirRead()
-        temperature,fahrenheit = sensor.TemperatureRead()
-        print(airquality)
+        
+        IVoltage1,IVoltage2 = sensor.TemperatureRead()
+        IVcurrent1 = IVoltage1 * IVscale
+        power = IVcurrent1 * 220.0
+        #print(airquality)
         socketio.emit('my data',
-                      {'data': temperature,'data1': fahrenheit,'data2': airquality,'data3':5 },
+                      {'data': round(IVcurrent1,2),'data1': IVoltage2,'data2': round(power,2),'data3':5.0 },
                       namespace='/test')
         #socketio.emit('my data',
         #              {'Temperature': 10, 'Fahrenheit': 10,'AirQuality': 30,},
@@ -83,4 +88,5 @@ if __name__ == '__main__':
         thread = Thread(target=background_thread)
         thread.daemon = True
         thread.start()
+        print('Server Running')
     socketio.run(app,'0.0.0.0',8000)

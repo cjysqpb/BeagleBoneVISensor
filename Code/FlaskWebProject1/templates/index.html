@@ -19,9 +19,9 @@
                        }); */
             socket.on('my data', function(msg) {
                 //    $('#data').append('<br>' + $('<div/>').text('My data :' + msg.data ).html());
-                $('#data').text('Temperature :' + msg.data + " C").html();
-                $('#data1').text('Fahrenheit  :' + msg.data1 + " F").html();
-                $('#data2').text('Air Quality :' + msg.data2).html();
+                $('#data').text('相线A电流 :' + msg.data + " A").html();
+                $('#data1').text('相线B电流  :' + msg.data1 + " A").html();
+                $('#data2').text('总功率 :' + msg.data2 + " W").html();
                 $('#data3').text('Light Intensity :' + msg.data3).html();
 
                 //$('#data').text('My data :' + msg.data).html();
@@ -72,19 +72,22 @@
 <body>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2 align="center">Home Control Center</h2></div>
+            <h2 align="center">202功率监视器</h2></div>
         <div class="panel-body">
 
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 align="center">Grove Temperature Sensor</h3>
+                            <h3 align="center" id="data"></h3>
                         </div>
                         <div class="panel-body">
+                            <!--<div class="col-md-6">-->
+                            <!--    <div style="font-size:20px" id="data"></div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-6">-->
+                            <!--    <div id="data1"></div>-->
+                            <!--</div>-->
                             <div class="col-md-6">
-                                <div id="data"></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div id="data1"></div>
+                                <div style="font-size:15px">电流(A)</div>
                             </div>
                             <div align="center">
                                 <canvas id="canvas" height=100%></canvas>
@@ -92,11 +95,12 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-succes">
+                    <div class="panel panel-danger">
                         <div class="panel-heading">
-                            <h3 align="center">Grove Air Quality Sensor</h3></div>
+                            <h3 align="center" id="data2"></h3></div>
                         <div class="panel-body">
-                            <div id="data2"></div>
+                            <!--<div style="font-size:20px" id="data2"></div>-->
+                            <div style="font-size:15px">功率(W)</div>
                             <div align="center">
                                 <canvas id="MoistureChart" height=100%></canvas>
                             </div>
